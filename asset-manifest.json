@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.js": "/AMS/static/js/main.4283ab04.chunk.js",
+    "main.js.map": "/AMS/static/js/main.4283ab04.chunk.js.map",
+    "runtime-main.js": "/AMS/static/js/runtime-main.07d4ed4b.js",
+    "runtime-main.js.map": "/AMS/static/js/runtime-main.07d4ed4b.js.map",
+    "static/css/2.c2c73c7d.chunk.css": "/AMS/static/css/2.c2c73c7d.chunk.css",
+    "static/js/2.81cc1b97.chunk.js": "/AMS/static/js/2.81cc1b97.chunk.js",
+    "static/js/2.81cc1b97.chunk.js.map": "/AMS/static/js/2.81cc1b97.chunk.js.map",
+    "static/js/3.f8e2e7e7.chunk.js": "/AMS/static/js/3.f8e2e7e7.chunk.js",
+    "static/js/3.f8e2e7e7.chunk.js.map": "/AMS/static/js/3.f8e2e7e7.chunk.js.map",
+    "index.html": "/AMS/index.html",
+    "static/css/2.c2c73c7d.chunk.css.map": "/AMS/static/css/2.c2c73c7d.chunk.css.map",
+    "static/js/2.81cc1b97.chunk.js.LICENSE.txt": "/AMS/static/js/2.81cc1b97.chunk.js.LICENSE.txt",
+    "static/media/AROUND Management Sheet.e9078dbb.png": "/AMS/static/media/AROUND Management Sheet.e9078dbb.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.07d4ed4b.js",
+    "static/css/2.c2c73c7d.chunk.css",
+    "static/js/2.81cc1b97.chunk.js",
+    "static/js/main.4283ab04.chunk.js"
+  ]
+}
