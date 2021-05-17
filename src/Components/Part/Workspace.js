@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-
+import b1 from './bt_b_google.png';
+import b2 from './bt_b_notion.png';
+import b3 from './bt_b_slack.png';
+import b4 from './bt_b_zoom.png';
 class Workspace extends Component {
     constructor(props) {
         super(props);
@@ -30,10 +33,10 @@ class Workspace extends Component {
     render(){
         return(
             <>
-            <Button1 onMouseOver={()=>this.setState({pageNum:"1"})} onClick={this.onHandleClick}>Drive</Button1>
-            <Button1 onMouseOver={()=>this.setState({pageNum:"2"})} onClick={this.onHandleClick}>Notion</Button1>
-            <Button1 onMouseOver={()=>this.setState({pageNum:"3"})} onClick={this.onHandleClick}>Slack</Button1>
-            <Button2 onMouseOver={()=>this.setState({pageNum:"4"})} onClick={this.onHandleClick}>Zoom</Button2>
+            <Button1 onMouseOver={()=>this.setState({pageNum:"1"})} onClick={this.onHandleClick}><img src={b1} alt="drive"></img></Button1>
+            <Button1 onMouseOver={()=>this.setState({pageNum:"2"})} onClick={this.onHandleClick}><img src={b2} alt="notion"></img></Button1>
+            <Button1 onMouseOver={()=>this.setState({pageNum:"3"})} onClick={this.onHandleClick}><img src={b3} alt="slack"></img></Button1>
+            <Button2 onMouseOver={()=>this.setState({pageNum:"4"})} onClick={this.onHandleClick}><img src={b4} alt="zoom"></img></Button2>
             {/* <workspaceButton1 onMouseOver={()=>this.setState({pageNum:"1"})} onClick={this.onHandleClick}></workspaceButton1>
             <workspaceButton1 onMouseOver={()=>this.setState({pageNum:"2"})} onClick={this.onHandleClick}></workspaceButton1>
             <workspaceButton1 onMouseOver={()=>this.setState({pageNum:"3"})} onClick={this.onHandleClick}></workspaceButton1>
@@ -46,19 +49,15 @@ class Workspace extends Component {
 export default Workspace;
 
 const Button1 = styled.div`
-    background: #F0A83E;
     float: left;
-    width: 95px;
-    height: 90px;
+    width: 76px;
+    height: 79px;
     border-radius: 20px;
-    margin-right :1.6%;
-    text-align:center;
+    margin-right : 5px;
 `
 const Button2 = styled.div`
-    background: #F0A83E;
     float: right;
-    width: 95px;
-    height: 90px;
+    width: 76px;
+    height: 79px;
     border-radius: 20px;
-    text-align:center;
 `

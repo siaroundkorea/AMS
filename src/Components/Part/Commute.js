@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-
-// import withLogin from './LoginHoc';
+import open from './bt_open_b.png'
+import close from './bt_close_b.png'
 
 class Commute extends Component {
 
@@ -19,10 +19,10 @@ class Commute extends Component {
    
     render(){
         return(
-            <Content>
-                <Itemstart onClick={this._Postattend}>출근</Itemstart>
-                <Itemend onClick={this._Postleave}>퇴근 </Itemend>
-            </Content>
+                <>
+                <Itemstart onClick={this._Postattend}><img src={open} alt="출근"></img></Itemstart>
+                <Itemend onClick={this._Postleave}><img src={close} alt="퇴근"></img></Itemend>
+                </>
         );
     }
 }
@@ -30,30 +30,16 @@ class Commute extends Component {
 // export default withLogin(Commute);
 export default Commute;
 
-const Content = styled.div`
-    float: left;
-    width:400px;
-    height: 202px;
-    background: #A6CDA7;
-    border-radius: 30px;
-`
 
 const Itemstart = styled.div`
     float: left;
-    width: 400px;
-    height: 96px;
-    margin-top: 2px;
-    background: #F0A83E;
-    border-radius: 80px;
-    text-Align:center;
+    width: 320px;
+    height: 92px;
 `
 const Itemend = styled.div`
     float: left;
-    width: 400px;
-    height: 96px;   
-    margin-top: 6px;
-    background: #F0A83E;
-    border-radius: 80px;
-    text-Align:center;
- 
+    width: 320px;
+    height: 92px;   
+    margin-top: 5px;
+
 `

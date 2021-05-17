@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 
 const API_KEY = 'b43a607f4e47bd6ceba2c429adc641d9';
 
@@ -9,6 +10,7 @@ class Weather extends Component {
     this.state = {
       temperature: 0,
       name: '',
+      icon: '',
     }
   }
 
@@ -19,6 +21,7 @@ class Weather extends Component {
       this.setState({
         temperature: Math.floor(json.main.temp - 273.15),
         name: json.weather[0].main,
+        icon: json.weather[0].icon,
 
       });
     });
@@ -30,13 +33,22 @@ class Weather extends Component {
   
 
   render() {
-      const { temperature, name} = this.state;
+      const { temperature, name,icon} = this.state;
+      const img_url = `http://openweathermap.org/img/w/${icon}.png`;
           return(
-            <>
-                {name} / {temperature}°C  
-            </>
+            <PartCWeather>
+              <div style={{float:"left",fontSize:"36px", fontWeight:"bolder"}}> {name} / {temperature}°C  </div>
+              <div style={{float:"left", marginLeft:"15px",marginTop:"-15px"}}> <img width="70px" height="70px" alt="weather_icon" src={img_url}/></div>
+            </PartCWeather>
           );
     }
 }
 
 export default Weather;
+
+
+const PartCWeather = styled.div`
+    color: #FFC63B;
+    width: 440px;
+    height: 50px;
+`

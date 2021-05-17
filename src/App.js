@@ -73,7 +73,7 @@ const Layout = styled.div`
   margin : 25px auto;
   padding: 50px;
   display: flex;
-  width: 1880px;
+  width: 1980px;
   flex-flow: row wrap;
 `
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Component } from 'react';
-import Weather from './Weather';
 import styled from 'styled-components';
 
 class Clock extends Component{
@@ -30,8 +29,9 @@ class Clock extends Component{
     render(){
         // console.log('Rendering Clock.....')
         return (
-            <PartBClock style={{fontSize:"48px", fontWeight:"bolder"}}>
-            {this.state.currentMouth+1}월 {this.state.currentDate}일 {this.state.currentHours}시 {this.state.currentMinutes}분   <Weather></Weather>  
+            <PartBClock>
+            <div style={{float:"left",fontSize:"48px", fontWeight:"bolder"}}>{this.state.currentMouth+1}월 {this.state.currentDate}일 </div>
+            <div style={{marginLeft:"13px",marginTop:"15px",float:"left", fontSize:"36px", fontWeight:"bolder"}}>{this.state.currentHours}시 {this.state.currentMinutes}분 </div>
             </PartBClock>
         )
     }
@@ -39,8 +39,8 @@ class Clock extends Component{
 export default Clock;
 
 const PartBClock = styled.div`
-    margin-top: 10px;
     color: #FFC63B;
     width: 730px;
     height: 107px;
+    
 `

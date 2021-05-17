@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import f from './bt_b_f.png'
+import n from './bt_b_n.png'
+import i from './bt_b_i.png'
+import y from './bt_b_y.png'
 
 
 
@@ -33,10 +37,10 @@ class SNS extends Component {
     render(){
         return(
             <>
-            <SNScontianer1 onMouseOver={()=>this.setState({pageNum:"1"})} onClick={this.onHandleClick}>Naver_Blog</SNScontianer1>
-            <SNScontianer1 onMouseOver={()=>this.setState({pageNum:"2"})} onClick={this.onHandleClick}>Facebook</SNScontianer1>
-            <SNScontianer1 onMouseOver={()=>this.setState({pageNum:"3"})} onClick={this.onHandleClick}>Instargram</SNScontianer1>
-            <SNScontianer2 onMouseOver={()=>this.setState({pageNum:"4"})} onClick={this.onHandleClick}>Youtube</SNScontianer2>
+            <SNScontianer1 onMouseOver={()=>this.setState({pageNum:"1"})} onClick={this.onHandleClick}><img src={n} alt='Naver_Blog'></img></SNScontianer1>
+            <SNScontianer1 onMouseOver={()=>this.setState({pageNum:"2"})} onClick={this.onHandleClick}><img src={f} alt='Facebook'></img></SNScontianer1>
+            <SNScontianer1 onMouseOver={()=>this.setState({pageNum:"3"})} onClick={this.onHandleClick}><img src={i} alt='Instargram'></img></SNScontianer1>
+            <SNScontianer2 onMouseOver={()=>this.setState({pageNum:"4"})} onClick={this.onHandleClick}><img src={y} alt='Youtube'></img></SNScontianer2>
             </>
         );
     }
@@ -46,19 +50,16 @@ export default SNS;
 
 const SNScontianer1 = styled.div`
     float: left;    
-    background: #868482;
     width: 453px;
     height: 140px;
-    margin-right: 22px;
+    margin-right: 29px;
     border-radius: 40px;
-    text-align:center;
+
 `
 
 const SNScontianer2 = styled.div`
     float: right;    
-    background: #868482;
     width: 453px;
     height: 140px;
     border-radius: 40px;
-    text-align:center;
 `
