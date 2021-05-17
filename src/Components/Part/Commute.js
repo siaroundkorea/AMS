@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import open from './bt_open_b.png'
-import close from './bt_close_b.png'
+import bopen from './bt_open_b.png'
+import bclose from './bt_close_b.png'
+import oopen from './bt_open_o.png'
+import oclose from './bt_close_o.png'
+import '../Button.css';
 
 class Commute extends Component {
 
@@ -20,8 +23,8 @@ class Commute extends Component {
     render(){
         return(
                 <>
-                <Itemstart onClick={this._Postattend}><img src={open} alt="출근"></img></Itemstart>
-                <Itemend onClick={this._Postleave}><img src={close} alt="퇴근"></img></Itemend>
+                <over><Itemstart onClick={this._Postattend}><img src={bopen} alt="출근"></img><img src={oopen} alt="출근"></img></Itemstart></over>
+                <over><Itemend onClick={this._Postleave}><img src={bclose} alt="퇴근"></img><img src={oclose} alt="퇴근"></img></Itemend></over>
                 </>
         );
     }

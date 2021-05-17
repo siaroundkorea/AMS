@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 import Iframe from 'react-iframe';
 import User from './bt_people_o.png';
 import profile from './mt_profle.png'
-import book from './bt_b_book.png';
+import bbook from './bt_b_book.png';
+import obook from './bt_o_book.png';
+import '../Button.css';
 
 function Info () {    
   var test="https://docs.google.com/spreadsheets/d/e/2PACX-1vSQwWAfhgZpkE2ibqUlhO06xvQH5ZRxSLor66i79CdhkjUcxn-2CW3-QN0AiUXnfSIJiS8VUtIO9Etk/pubhtml?gid="+window.localStorage.getItem(window.sessionStorage.getItem('name'))+"&single=true&widget=true&headers=false&range=K1:K3";      
@@ -47,9 +49,9 @@ function Info () {
                     /> 
                 </Infotime>
 
-                <Infotimecheck onClick={onHandleClick}>
-                  <img src={book} alt="Timecheck"></img>
-                </Infotimecheck>
+                <over><Infotimecheck onClick={onHandleClick}>
+                  <img src={bbook} alt="Timecheck"></img><img src={obook} alt="Timecheck"></img>
+                </Infotimecheck></over>
           </Content>
         );
       }
@@ -73,6 +75,7 @@ const Infomain = styled.div`
   background: #ffffff;
   margin-bottom: 16px;
   border-radius: 40px;
+
 `
 const Infoname = styled.div`
   width: 140px;
@@ -88,6 +91,9 @@ const Infomore = styled.div`
   background: #F7CA50;
   margin-right: 50px;
   float: right;
+  &:hover {
+    background-color: #F0A83C;
+  }
 `
 const Infotime = styled.div`
   width: 305px;

@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import f from './bt_b_f.png'
-import n from './bt_b_n.png'
-import i from './bt_b_i.png'
-import y from './bt_b_y.png'
-
+import bf from './bt_b_f.png'
+import bn from './bt_b_n.png'
+import bi from './bt_b_i.png'
+import by from './bt_b_y.png'
+import of from './bt_o_f.png'
+import on from './bt_o_n.png'
+import oi from './bt_o_i.png'
+import oy from './bt_o_y.png'
+import '../Button.css';
 
 
 class SNS extends Component {
@@ -12,8 +16,13 @@ class SNS extends Component {
         super(props);
             this.state = {
               pageNum: "0",
+              state: false
             };
          }
+
+
+
+
          onHandleClick = ()=> {
             console.log(this.state.pageNum)
             switch(this.state.pageNum){
@@ -37,10 +46,10 @@ class SNS extends Component {
     render(){
         return(
             <>
-            <SNScontianer1 onMouseOver={()=>this.setState({pageNum:"1"})} onClick={this.onHandleClick}><img src={n} alt='Naver_Blog'></img></SNScontianer1>
-            <SNScontianer1 onMouseOver={()=>this.setState({pageNum:"2"})} onClick={this.onHandleClick}><img src={f} alt='Facebook'></img></SNScontianer1>
-            <SNScontianer1 onMouseOver={()=>this.setState({pageNum:"3"})} onClick={this.onHandleClick}><img src={i} alt='Instargram'></img></SNScontianer1>
-            <SNScontianer2 onMouseOver={()=>this.setState({pageNum:"4"})} onClick={this.onHandleClick}><img src={y} alt='Youtube'></img></SNScontianer2>
+            <over><SNScontianer1 onMouseOver={()=>this.setState({pageNum:"1"})} onClick={this.onHandleClick}><img src={bn} alt='Naver_Blog'></img><img src={on} alt='Naver_Blog'></img></SNScontianer1></over>
+            <over><SNScontianer1 onMouseOver={()=>this.setState({pageNum:"2"})} onClick={this.onHandleClick}><img src={bf} alt='Facebook'></img><img src={of} alt='Naver_Blog'></img></SNScontianer1></over>
+            <over><SNScontianer1 onMouseOver={()=>this.setState({pageNum:"3"})} onClick={this.onHandleClick}><img src={bi} alt='Instargram'></img><img src={oi} alt='Naver_Blog'></img></SNScontianer1></over>
+            <over><SNScontianer2 onMouseOver={()=>this.setState({pageNum:"4"})} onClick={this.onHandleClick}><img src={by} alt='Youtube'></img><img src={oy} alt='Naver_Blog'></img></SNScontianer2></over>
             </>
         );
     }
@@ -54,8 +63,10 @@ const SNScontianer1 = styled.div`
     height: 140px;
     margin-right: 29px;
     border-radius: 40px;
-
-`
+    &:hover{
+        background: #339af0;
+    }
+`;
 
 const SNScontianer2 = styled.div`
     float: right;    

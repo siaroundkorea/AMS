@@ -4,6 +4,12 @@ import b1 from './bt_b_google.png';
 import b2 from './bt_b_notion.png';
 import b3 from './bt_b_slack.png';
 import b4 from './bt_b_zoom.png';
+import o1 from './bt_o_google.png';
+import o2 from './bt_o_notion.png';
+import o3 from './bt_o_slack.png';
+import o4 from './bt_o_zoom.png';
+import '../Button.css';
+
 class Workspace extends Component {
     constructor(props) {
         super(props);
@@ -33,10 +39,10 @@ class Workspace extends Component {
     render(){
         return(
             <>
-            <Button1 onMouseOver={()=>this.setState({pageNum:"1"})} onClick={this.onHandleClick}><img src={b1} alt="drive"></img></Button1>
-            <Button1 onMouseOver={()=>this.setState({pageNum:"2"})} onClick={this.onHandleClick}><img src={b2} alt="notion"></img></Button1>
-            <Button1 onMouseOver={()=>this.setState({pageNum:"3"})} onClick={this.onHandleClick}><img src={b3} alt="slack"></img></Button1>
-            <Button2 onMouseOver={()=>this.setState({pageNum:"4"})} onClick={this.onHandleClick}><img src={b4} alt="zoom"></img></Button2>
+            <over><Button1 onMouseOver={()=>this.setState({pageNum:"1"})} onClick={this.onHandleClick}><img src={b1} alt="drive"></img><img src={o1} alt="drive"></img></Button1></over>
+            <over><Button1 onMouseOver={()=>this.setState({pageNum:"2"})} onClick={this.onHandleClick}><img src={b2} alt="notion"></img><img src={o2} alt="notion"></img></Button1></over>
+            <over><Button1 onMouseOver={()=>this.setState({pageNum:"3"})} onClick={this.onHandleClick}><img src={b3} alt="slack"></img><img src={o3} alt="slack"></img></Button1></over>
+            <over><Button2 onMouseOver={()=>this.setState({pageNum:"4"})} onClick={this.onHandleClick}><img src={b4} alt="zoom"></img><img src={o4} alt="zoom"></img></Button2></over>
             {/* <workspaceButton1 onMouseOver={()=>this.setState({pageNum:"1"})} onClick={this.onHandleClick}></workspaceButton1>
             <workspaceButton1 onMouseOver={()=>this.setState({pageNum:"2"})} onClick={this.onHandleClick}></workspaceButton1>
             <workspaceButton1 onMouseOver={()=>this.setState({pageNum:"3"})} onClick={this.onHandleClick}></workspaceButton1>
