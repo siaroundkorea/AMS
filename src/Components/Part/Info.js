@@ -8,13 +8,10 @@ import bbook from './bt_b_book.png';
 import obook from './bt_o_book.png';
 import '../Button.css';
 
+
 function Info () {    
   var test="https://docs.google.com/spreadsheets/d/e/2PACX-1vSQwWAfhgZpkE2ibqUlhO06xvQH5ZRxSLor66i79CdhkjUcxn-2CW3-QN0AiUXnfSIJiS8VUtIO9Etk/pubhtml?gid="+window.localStorage.getItem(window.sessionStorage.getItem('name'))+"&single=true&widget=true&headers=false&range=K1:K3";      
   
-  const onHandleClick=()=>{
-    window.open("https://docs.google.com/spreadsheets/d/1peDjD1ddUgV5mfIZnTrHpMY7rQKcJ5IpLmswAQPm9cw/edit#gid="+window.localStorage.getItem(window.sessionStorage.getItem('name')))
-  } 
-
   return (
           <Content>
               <Infotitle>
@@ -44,14 +41,14 @@ function Info () {
                 <Infotime>
                   <Iframe url= {test}
                     position="relative"
-                    width= "283px" 
+                    width= "290px" 
                     height="160px"
                     /> 
                 </Infotime>
 
-                <over><Infotimecheck onClick={onHandleClick}>
+                <over><Infotimecheck><Link to='/edit'>
                   <img src={bbook} alt="Timecheck"></img><img src={obook} alt="Timecheck"></img>
-                </Infotimecheck></over>
+                  </Link></Infotimecheck></over>
           </Content>
         );
       }
@@ -64,6 +61,7 @@ export default Info;
 const Content = styled.div`
   width: 400px;
   height: 566px;
+  
 `
 const Infotitle = styled.div`
   width: 184px;
@@ -75,7 +73,6 @@ const Infomain = styled.div`
   background: #ffffff;
   margin-bottom: 16px;
   border-radius: 40px;
-
 `
 const Infoname = styled.div`
   width: 140px;
@@ -98,8 +95,6 @@ const Infomore = styled.div`
 const Infotime = styled.div`
   width: 305px;
   height: 160px;
-  background: #ffffff;
-  border-radius: 30px;
   padding-left: 15px;
   margin-bottom: 8px;
 `

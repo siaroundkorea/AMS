@@ -1,5 +1,6 @@
 import React, { Component} from 'react';
 import styled from 'styled-components';
+import withLogin from '../LoginHoc';
 class Admin extends Component {
     
     constructor(props){
@@ -72,12 +73,12 @@ _Postdelete =(e) =>{
                     height="100px"
                     src={window.sessionStorage.getItem('imgUrl')}
                     alt=""/></p>
-                <p>Id : {window.sessionStorage.getItem('id')}</p>
-                <p>Name : {window.sessionStorage.getItem('name')}</p>
-                <p>Email : {window.sessionStorage.getItem('email')}</p>
-                <p>Provider : {window.sessionStorage.getItem('provider')}</p>
-                <p>Joindate : <input type="date" onChange={this._handleDate}></input></p>
-                <p>Team : <select value={this.state.selectteam} onChange={this._handleSelectTeam}>
+                <p>Google Id : {window.sessionStorage.getItem('id')}</p>
+                <p>이 름 : {window.sessionStorage.getItem('name')}</p>
+                <p>이메일 : {window.sessionStorage.getItem('email')}</p>
+                <p>입사일 : <input type="date" onChange={this._handleDate}></input></p>
+                <p>팀 : <select value={this.state.selectteam} onChange={this._handleSelectTeam}>
+                  <option value="없음">선택</option>
                   <option value="기획">기획</option>
                   <option value="경지">경영지원</option>
                   <option value="영상">영상</option>
@@ -89,6 +90,7 @@ _Postdelete =(e) =>{
                 </p>
 
                 <p>Position : <select value={this.state.selectposition} onChange={this._handleSelectPosition}>
+                  <option value="없음">선택</option>
                   <option value="대표">대표</option>
                   <option value="부대표">부대표</option>
                   <option value="본부장">본부장</option>
@@ -111,8 +113,8 @@ _Postdelete =(e) =>{
 }
 
     
-// export default withLogin(Admin);
-export default Admin;
+export default withLogin(Admin);
+
 
 const Content = styled.div`
   margin: 0 auto;

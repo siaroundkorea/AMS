@@ -1,13 +1,13 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { Home, Login, Commute, Admin} from './index';
+import { Home, Login,Admin,Edit} from './index';
 
 const Router = () => (
     <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
-        <Route path="/commute" component={Commute} />
         <Route path="/adminpage" component={Admin} />
+        <Route path="/edit" component={Edit} />
     </Switch>
 );
 

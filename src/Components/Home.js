@@ -12,12 +12,37 @@ import apptitle from './mt_app.png';
 import calendartitle from './mt_calendar.png';
 import mailtitle from './mt_mail.png';
 import cliptitle from './mt_clip.png';
-import img from './img_1.png'
+import img from './img_1.png';
+import omail from './bt_mail_o.png';
+import bmail from './bt_mail_b.png';
 import Clock from './Part/Clock';
 import Weather from './Part/Weather';
+import './Button.css';
 
 
 class Home extends Component {
+
+  constructor(props) {
+    super(props);
+        this.state = {
+          pageNum: "0",
+        };
+     }
+
+  _onclickHandle=()=>{
+    switch(this.state.pageNum){
+      case "1":
+          window.open('https://mail.google.com/mail');
+          break;
+          case "2":
+              window.open('https://afact.kr');
+              break;
+              default:
+                alert('존재하지 않는 페이지 입니다.');
+                   break;
+       }
+  }
+
   render() {
       return (
 
@@ -61,9 +86,9 @@ class Home extends Component {
 
               <PartBmail>
                 <PartBmailtitle><img src={mailtitle} alt="mailtitle"></img></PartBmailtitle>
-                <PartBmailmain>
-                    공사중입니다.
-                </PartBmailmain>
+                <over><PartBmailmain onMouseOver={()=>this.setState({pageNum:"1"})} onClick={this._onclickHandle}>
+                  <img src={bmail} width="880px" height="152px" alt="gmail"></img><img src={omail} width="880px" height="152px" alt="gmail"></img>
+                </PartBmailmain></over>
           
               </PartBmail>
           </PartB>
@@ -74,7 +99,7 @@ class Home extends Component {
             <Weather></Weather>
             </PartCtitle>
             <PartCmain>
-              <PartCmaintitle><img src={cliptitle} alt="cliptitle"></img></PartCmaintitle>
+              <PartCmaintitle><img src={cliptitle} alt="cliptitle" ></img></PartCmaintitle>
               <PartCcontioner>
                 <PartCclipboard>
                   <Clip></Clip>
@@ -93,6 +118,7 @@ class Home extends Component {
           {/* ------------------------------------ News ------------------------------------ */}
           <PartNews>
             <PartNewscontionar><News/></PartNewscontionar>
+            <PartGonews onMouseOver={()=>this.setState({pageNum:"2"})} onClick={this._onclickHandle}> 👉🏻 더 자세한 이야기 보러가기</PartGonews>
           </PartNews>
         </Content>
         
@@ -122,6 +148,7 @@ const PartAinfo = styled.div`
     width: 320x;
     height: 566px;
     margin-bottom :40px;
+    
 `
 const PartAcommute = styled.div`
     float: left;
@@ -206,7 +233,7 @@ const PartBmailtitle = styled.div`
     color: #0082F9;
 `
 const PartBmailmain = styled.div` 
-    background: #868482;
+    background: #ffffff;
     width: 880px;
     height: 152px;
     text-align: center;
@@ -260,11 +287,9 @@ const PartCimg = styled.div`
     background: #FFFFFF;
     width: 360px;
     height: 289px;
-    border-radius: 40px;
     padding-top:20px;
     text-Align:center;
 `
-
 
 const PartSNS = styled.div`
     float: left;
@@ -290,10 +315,20 @@ const PartNews = styled.div`
 const PartNewscontionar = styled.div`
     float: left;
     background: #FFFFFF;
-    width: 1900px;
-    height: 800px;
+    width: 1840px;
+    padding:30px; 
+    height: 740px;
     max-width: 1900px;
     max-height: 800px;
     overflow: auto;
     border-radius: 40px;
+`
+
+const PartGonews  = styled.div`
+    float: right;
+    margin-right:50px;
+    margin-top:5px;
+    border-radius: 40px;
+    font-size:15px;
+    font-weight:bolder;
 `

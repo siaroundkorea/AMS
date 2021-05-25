@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import main from './AROUND Management Sheet.png'
+import main from './AROUND Management System.png'
 import bperson from './bt_b_people.png'
 import operson from './bt_people_o.png'
 class Header extends Component {
@@ -45,9 +45,6 @@ const Search = styled.div`
     text-align:center;
     padding:15px;
     border-bottom: 0.3px solid #000000;
-    &:hover {
-        background-color: #DCDCDC;
-      }
 
 `
 

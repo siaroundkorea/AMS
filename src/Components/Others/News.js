@@ -18,10 +18,10 @@ useEffect(()=>{
 },[])
 
     return(
-    <div style={{maxwidth:"500px",maxheight:"500px"}}>  
+    <div>  
         <NotionRenderer 
             blockMap={response}
-            fullPage={true}
+            fullPage={false}
             darkMode={false}
             scroll={true}/>
     </div>
