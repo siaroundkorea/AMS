@@ -59,7 +59,7 @@ function Edit() {
                 <p>사유: <input type="text" width="300" height="200" value={reason} onChange={_handleReason}></input></p>
                 <hr/>
                 <button onClick={_PostEditinfo}>수 정</button>
-                <Link to="/edit_"><button> 새로고침 </button></Link>
+                <Link to="/edit"><button> 새로고침 </button></Link>
                 
             </div>
             <Editalert>
