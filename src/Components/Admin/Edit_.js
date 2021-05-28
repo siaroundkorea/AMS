@@ -10,6 +10,7 @@ function Edit() {
     const [date, setDate] = useState();
     const [starttime, setStarttime] = useState();
     const [endtime, setEndtime] = useState();
+    const [time, setTime] = useState();
     const [reason, setReason] = useState();
     var test="https://docs.google.com/spreadsheets/d/e/2PACX-1vSQwWAfhgZpkE2ibqUlhO06xvQH5ZRxSLor66i79CdhkjUcxn-2CW3-QN0AiUXnfSIJiS8VUtIO9Etk/pubhtml?gid="+window.localStorage.getItem(window.sessionStorage.getItem('name'))+"&single=true&widget=true&headers=false&range=A:I";      
 
@@ -29,6 +30,10 @@ function Edit() {
     const _handleReason =e=>{
         setReason(e.target.value)
     };
+
+    const _handleTime =e=>{
+        setTime(e.target.value)
+    };
     
     
     const _PostEditinfo =e=>{
@@ -37,8 +42,9 @@ function Edit() {
         var senddate = "AKdate="+date+"&"
         var sendstarttime = "AKstarttime="+starttime+"&"
         var sendendtime = "AKendtime="+endtime+"&"
+        var sendtime = "AKtime="+time+"&"
         var sendreason = "AKreason="+reason
-        var str = "https://script.google.com/a/macros/aroundkorea.kr/s/AKfycbyLYSk5tAvcQD0h7rzoOUhc7rvNDn1-OuHVcEW1kh-Q/dev?"+sendop+sendid+senddate+sendstarttime+sendendtime+sendreason
+        var str = "https://script.google.com/a/macros/aroundkorea.kr/s/AKfycbyLYSk5tAvcQD0h7rzoOUhc7rvNDn1-OuHVcEW1kh-Q/dev?"+sendop+sendid+senddate+sendstarttime+sendendtime+sendtime+sendreason
         window.open(str,'알림','width=300, height=200, menubar=no, location=no, status=no, toolbar=no, resizeable=0')
     }  
 
@@ -56,6 +62,7 @@ function Edit() {
                 <p>수정하고 싶은 날짜 : <input type="date" value={date} onChange={_handleDate}></input></p>
                 <p>출근시간: <input type="text" value={starttime} onChange={_handleStarttime}></input></p>
                 <p>퇴근시간: <input type="text" value={endtime} onChange={_handleEndtime}></input></p>
+                <p>추가시간: <input type="text" value={endtime} onChange={_handleTime}></input></p>
                 <p>사유: <input type="text" width="300" height="200" value={reason} onChange={_handleReason}></input></p>
                 <hr/>
                 <button onClick={_PostEditinfo}>수 정</button>
