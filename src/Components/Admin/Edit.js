@@ -62,7 +62,7 @@ function Edit() {
                 <p>수정하고 싶은 날짜 : <input type="date" value={date} onChange={_handleDate}></input></p>
                 <p>출근시간: <input type="text" value={starttime} onChange={_handleStarttime}></input></p>
                 <p>퇴근시간: <input type="text" value={endtime} onChange={_handleEndtime}></input></p>
-                <p>추가시간: <input type="text" value={endtime} onChange={_handleTime}></input></p>
+                <p>추가시간: <input type="text" value={time} onChange={_handleTime}></input></p>
                 <p>사유: <input type="text" width="300" height="200" value={reason} onChange={_handleReason}></input></p>
                 <hr/>
                 <button onClick={_PostEditinfo}>수 정</button>
