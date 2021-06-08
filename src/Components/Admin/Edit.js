@@ -77,7 +77,6 @@ function Edit() {
                     <h3>5. 월말에 출퇴근 시간수정을 끝마쳐주시길 바랍니다. (어라운드분들의 연차가 사라지는 마법이 일어납니다.) </h3>
                     <h3>6. 수정사항에 버그가 발생하면 노션 버그게시판을 활용해주시길 바랍니다.</h3>
                     <h3>7. 수정사항은 Google의 마음에 따라 약 1~5분 사이에 갱신됩니다. </h3>
-
             </Editalert>
             <Imgalert>
                 <img src={Icon} alt=""></img>
@@ -98,7 +97,7 @@ const Content = styled.div`
 
 const Editalert = styled.div`
   width: 1090px;
-  height: 210px;
+  height: 300px;
   border: 5px solid Red;
   border-radius: 30px;  
   padding : 10px;

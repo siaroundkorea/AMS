@@ -6,7 +6,7 @@ import Icon from './Icon.png';
 import { Link } from 'react-router-dom';
 
 
-function Edit() {
+function Edit_() {
     const [date, setDate] = useState();
     const [starttime, setStarttime] = useState();
     const [endtime, setEndtime] = useState();
@@ -73,8 +73,10 @@ function Edit() {
                     <h3>1. 수정이 가능한 날짜는 마지막 출근 날짜부터 7일 전까지 입니다.</h3>
                     <h3>2. 출/퇴근 시간은 24시형태로 시간만 기입하면 됩니다. (예시 9시 출근/14시 퇴근 = 9와 14만 기입).</h3>
                     <h3>3. 사유란에 연차 를 적으면 연차 일 수에서 차감됩니다.</h3>
-                    <h3>4. 수정사항에 버그가 발생하면 노션 버그게시판을 활용해주시길 바랍니다.</h3>
-                    <h3>5. 수정사항은 Google의 마음에 따라 약 1~5분 사이에 갱신됩니다. </h3>
+                    <h3>4. 야근 시 저녁식사 시간이 반영이 되지 않습니다. </h3>
+                    <h3>5. 월말에 출퇴근 시간수정을 끝마쳐주시길 바랍니다. (어라운드분들의 연차가 사라지는 마법이 일어납니다.) </h3>
+                    <h3>6. 수정사항에 버그가 발생하면 노션 버그게시판을 활용해주시길 바랍니다.</h3>
+                    <h3>7. 수정사항은 Google의 마음에 따라 약 1~5분 사이에 갱신됩니다. </h3>
             </Editalert>
             <Imgalert>
                 <img src={Icon} alt=""></img>
@@ -85,7 +87,7 @@ function Edit() {
 }
 
  
-export default withLogin(Edit);
+export default withLogin(Edit_);
 
 
 const Content = styled.div`
@@ -95,7 +97,7 @@ const Content = styled.div`
 
 const Editalert = styled.div`
   width: 1090px;
-  height: 210px;
+  height: 300px;
   border: 5px solid Red;
   border-radius: 30px;  
   padding : 10px;
