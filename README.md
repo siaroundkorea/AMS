@@ -16,4 +16,8 @@ BackI / DB,Architect :IxieL
 
 ### `Version`
 
+2021.05. AMS ver. 2.1.1 업데이트
+
+2021.04. AMS ver. 1.0.0 배포
+
 COPYRIGHTⓒ2021 by AROUNDKorea Corp. ALL RIGHTS RESERVED
