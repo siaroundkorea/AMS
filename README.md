@@ -1,4 +1,4 @@
-# AMS version 1
+# AMS
 
 This project is Around Management System made by AROUNDKorea SI team
 
