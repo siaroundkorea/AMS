@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>방구차 게임 (Rally-X)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .game-info {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .info-item {
+            font-size: 1.1rem;
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+        }
+
+        .fuel-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .fuel-bar {
+            width: 150px;
+            height: 20px;
+            background: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #555;
+        }
+
+        .fuel-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            transition: width 0.1s;
+        }
+
+        .fuel-fill.low {
+            background: linear-gradient(90deg, #f44336, #ff5722);
+        }
+
+        #gameCanvas {
+            border: 4px solid #4a4a6a;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+
+        .minimap {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 160px;
+            height: 120px;
+            background: rgba(0,0,0,0.8);
+            border: 2px solid #666;
+            border-radius: 8px;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .overlay.hidden {
+            display: none;
+        }
+
+        .overlay h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .overlay p {
+            font-size: 1.3rem;
+            margin: 10px 0;
+        }
+
+        .instructions {
+            text-align: left;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+
+        .instructions p {
+            margin: 8px 0;
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            padding: 15px 50px;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.6);
+        }
+
+        .gameover h2 {
+            color: #f44;
+        }
+
+        .win h2 {
+            color: #4f4;
+        }
+
+        .controls-hint {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 30px;
+            background: rgba(0,0,0,0.6);
+            padding: 10px 25px;
+            border-radius: 10px;
+        }
+
+        .controls-hint span {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        .mobile-controls {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            gap: 10px;
+        }
+
+        .mobile-btn {
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.4);
+            border-radius: 15px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .d-pad {
+            display: grid;
+            grid-template-columns: repeat(3, 60px);
+            grid-template-rows: repeat(3, 60px);
+            gap: 5px;
+        }
+
+        .d-pad .mobile-btn:nth-child(1) { grid-column: 2; grid-row: 1; }
+        .d-pad .mobile-btn:nth-child(2) { grid-column: 1; grid-row: 2; }
+        .d-pad .mobile-btn:nth-child(3) { grid-column: 3; grid-row: 2; }
+        .d-pad .mobile-btn:nth-child(4) { grid-column: 2; grid-row: 3; }
+
+        .fart-btn {
+            width: 100px;
+            height: 100px;
+            font-size: 2.5rem;
+            margin-left: 30px;
+            align-self: center;
+        }
+
+        @media (max-width: 850px) {
+            .controls-hint {
+                display: none;
+            }
+            .mobile-controls {
+                display: flex;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .minimap {
+                width: 100px;
+                height: 75px;
+                top: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>🚗 방구차 게임 💨</h1>
+
+    <div class="game-info" id="gameInfo" style="display: none;">
+        <div class="info-item">점수: <span id="score">0</span></div>
+        <div class="info-item">레벨: <span id="level">1</span></div>
+        <div class="info-item">깃발: <span id="flags">0</span>/10</div>
+        <div class="fuel-container">
+            <span>⛽</span>
+            <div class="fuel-bar">
+                <div class="fuel-fill" id="fuelBar"></div>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <canvas class="minimap" id="minimap" width="160" height="120"></canvas>
+
+    <!-- Start Screen -->
+    <div class="overlay" id="startScreen">
+        <h2>🚗 방구차 게임 💨</h2>
+        <div class="instructions">
+            <p>🎮 <strong>방향키</strong>: 이동</p>
+            <p>⌨️ <strong>스페이스바</strong>: 방구 발사</p>
+            <p>🚩 깃발을 모두 모으세요!</p>
+            <p>🚗 빨간 차를 피하세요!</p>
+            <p>💨 방구로 적을 멈추세요!</p>
+            <p>⛽ 연료를 주의하세요!</p>
+            <p>⭐ 스페셜 깃발은 연료 보충!</p>
+        </div>
+        <button class="btn" onclick="startGame()">게임 시작</button>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div class="overlay hidden gameover" id="gameoverScreen">
+        <h2>💥 게임 오버! 💥</h2>
+        <p>최종 점수: <span id="finalScore">0</span></p>
+        <p>도달 레벨: <span id="finalLevel">1</span></p>
+        <button class="btn" onclick="restartGame()">다시 시작</button>
+    </div>
+
+    <!-- Win Screen -->
+    <div class="overlay hidden win" id="winScreen">
+        <h2>🎉 클리어! 🎉</h2>
+        <p>점수: <span id="winScore">0</span></p>
+        <p>레벨 <span id="clearedLevel">1</span> 완료!</p>
+        <button class="btn" onclick="nextLevel()">다음 레벨</button>
+    </div>
+
+    <div class="controls-hint">
+        <span>⬆️⬇️⬅️➡️ 이동</span>
+        <span>SPACE 방구</span>
+    </div>
+
+    <div class="mobile-controls" id="mobileControls">
+        <div class="d-pad">
+            <button class="mobile-btn" data-key="ArrowUp">⬆️</button>
+            <button class="mobile-btn" data-key="ArrowLeft">⬅️</button>
+            <button class="mobile-btn" data-key="ArrowRight">➡️</button>
+            <button class="mobile-btn" data-key="ArrowDown">⬇️</button>
+        </div>
+        <button class="mobile-btn fart-btn" data-key="Space">💨</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const minimapCanvas = document.getElementById('minimap');
+        const minimapCtx = minimapCanvas.getContext('2d');
+
+        const GAME_WIDTH = 800;
+        const GAME_HEIGHT = 600;
+        const CAR_SIZE = 30;
+        const FLAG_SIZE = 25;
+        const FART_SIZE = 45;
+
+        let gameState = 'start';
+        let player = { x: 100, y: 100, direction: 'right' };
+        let enemies = [];
+        let flags = [];
+        let farts = [];
+        let fuel = 100;
+        let score = 0;
+        let level = 1;
+        let keys = {};
+        let lastFartTime = 0;
+        let animationId;
+
+        // 키보드 이벤트
+        document.addEventListener('keydown', (e) => {
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.code)) {
+                e.preventDefault();
+            }
+            keys[e.code] = true;
+        });
+
+        document.addEventListener('keyup', (e) => {
+            keys[e.code] = false;
+        });
+
+        // 모바일 컨트롤
+        document.querySelectorAll('.mobile-btn').forEach(btn => {
+            const key = btn.dataset.key;
+
+            btn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                keys[key] = true;
+            });
+
+            btn.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                keys[key] = false;
+            });
+
+            btn.addEventListener('mousedown', () => keys[key] = true);
+            btn.addEventListener('mouseup', () => keys[key] = false);
+            btn.addEventListener('mouseleave', () => keys[key] = false);
+        });
+
+        function initGame() {
+            // 깃발 생성
+            flags = [];
+            for (let i = 0; i < 10; i++) {
+                flags.push({
+                    id: i,
+                    x: Math.random() * (GAME_WIDTH - FLAG_SIZE - 100) + 50,
+                    y: Math.random() * (GAME_HEIGHT - FLAG_SIZE - 100) + 50,
+                    isSpecial: i === 0
+                });
+            }
+
+            // 적 생성
+            enemies = [];
+            const enemyCount = Math.min(level + 2, 8);
+            for (let i = 0; i < enemyCount; i++) {
+                enemies.push({
+                    id: i,
+                    x: GAME_WIDTH - 100 - (i * 50) % 200,
+                    y: GAME_HEIGHT - 100 - Math.floor(i / 2) * 80,
+                    stunned: false,
+                    stunnedTime: 0,
+                    angle: 0
+                });
+            }
+
+            player = { x: 100, y: 100, direction: 'right' };
+            farts = [];
+            fuel = 100;
+            gameState = 'playing';
+
+            document.getElementById('gameInfo').style.display = 'flex';
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('gameoverScreen').classList.add('hidden');
+            document.getElementById('winScreen').classList.add('hidden');
+
+            if (animationId) cancelAnimationFrame(animationId);
+            gameLoop();
+        }
+
+        function shootFart() {
+            const now = Date.now();
+            if (now - lastFartTime < 300) return;
+            if (fuel < 5) return;
+
+            lastFartTime = now;
+
+            let fartX = player.x;
+            let fartY = player.y;
+
+            if (player.direction === 'left') fartX = player.x + CAR_SIZE;
+            else if (player.direction === 'right') fartX = player.x - FART_SIZE + 10;
+            else if (player.direction === 'up') fartY = player.y + CAR_SIZE;
+            else if (player.direction === 'down') fartY = player.y - FART_SIZE + 10;
+
+            farts.push({
+                id: Date.now(),
+                x: fartX,
+                y: fartY,
+                lifetime: 80
+            });
+
+            fuel = Math.max(0, fuel - 5);
+        }
+
+        function updateGame() {
+            // 플레이어 이동
+            const speed = 4;
+            if (keys.ArrowUp) { player.y -= speed; player.direction = 'up'; }
+            if (keys.ArrowDown) { player.y += speed; player.direction = 'down'; }
+            if (keys.ArrowLeft) { player.x -= speed; player.direction = 'left'; }
+            if (keys.ArrowRight) { player.x += speed; player.direction = 'right'; }
+
+            player.x = Math.max(0, Math.min(GAME_WIDTH - CAR_SIZE, player.x));
+            player.y = Math.max(0, Math.min(GAME_HEIGHT - CAR_SIZE, player.y));
+
+            // 방구 발사
+            if (keys.Space) {
+                shootFart();
+            }
+
+            // 연료 소모
+            fuel = Math.max(0, fuel - 0.015);
+
+            // 적 이동
+            enemies.forEach(enemy => {
+                if (enemy.stunned) {
+                    enemy.stunnedTime--;
+                    enemy.angle += 0.3;
+                    if (enemy.stunnedTime <= 0) {
+                        enemy.stunned = false;
+                    }
+                    return;
+                }
+
+                const dx = player.x - enemy.x;
+                const dy = player.y - enemy.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                const speed = 2.2 + level * 0.1;
+
+                if (dist > 0) {
+                    enemy.x += (dx / dist) * speed;
+                    enemy.y += (dy / dist) * speed;
+                }
+            });
+
+            // 방구 업데이트
+            farts = farts.map(fart => ({
+                ...fart,
+                lifetime: fart.lifetime - 1
+            })).filter(fart => fart.lifetime > 0);
+
+            // 방구-적 충돌
+            farts.forEach(fart => {
+                enemies.forEach(enemy => {
+                    if (enemy.stunned) return;
+                    const dx = enemy.x - fart.x;
+                    const dy = enemy.y - fart.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < FART_SIZE + CAR_SIZE / 2) {
+                        enemy.stunned = true;
+                        enemy.stunnedTime = 150;
+                    }
+                });
+            });
+
+            // 깃발 수집
+            flags = flags.filter(flag => {
+                const dx = (player.x + CAR_SIZE/2) - (flag.x + FLAG_SIZE/2);
+                const dy = (player.y + CAR_SIZE/2) - (flag.y + FLAG_SIZE/2);
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist < (CAR_SIZE + FLAG_SIZE) / 2) {
+                    const points = flag.isSpecial ? 500 : 100 * (11 - flags.length);
+                    score += points;
+                    if (flag.isSpecial) {
+                        fuel = Math.min(100, fuel + 25);
+                    }
+                    return false;
+                }
+                return true;
+            });
+
+            // 클리어 체크
+            if (flags.length === 0) {
+                gameState = 'win';
+                showWinScreen();
+                return;
+            }
+
+            // 적 충돌 체크
+            for (const enemy of enemies) {
+                if (enemy.stunned) continue;
+                const dx = player.x - enemy.x;
+                const dy = player.y - enemy.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < CAR_SIZE * 0.8) {
+                    gameState = 'gameover';
+                    showGameOver();
+                    return;
+                }
+            }
+
+            // 연료 체크
+            if (fuel <= 0) {
+                gameState = 'gameover';
+                showGameOver();
+            }
+        }
+
+        function drawGame() {
+            // 배경
+            ctx.fillStyle = '#1a1a2e';
+            ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+
+            // 격자
+            ctx.strokeStyle = '#2d2d44';
+            ctx.lineWidth = 1;
+            for (let x = 0; x < GAME_WIDTH; x += 40) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, GAME_HEIGHT);
+                ctx.stroke();
+            }
+            for (let y = 0; y < GAME_HEIGHT; y += 40) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(GAME_WIDTH, y);
+                ctx.stroke();
+            }
+
+            // 방구
+            farts.forEach(fart => {
+                ctx.globalAlpha = fart.lifetime / 80;
+                ctx.font = `${FART_SIZE}px Arial`;
+                ctx.fillText('💨', fart.x, fart.y + FART_SIZE);
+                ctx.globalAlpha = 1;
+            });
+
+            // 깃발
+            flags.forEach(flag => {
+                ctx.font = `${FLAG_SIZE}px Arial`;
+                if (flag.isSpecial) {
+                    ctx.save();
+                    const scale = 1 + Math.sin(Date.now() / 200) * 0.2;
+                    ctx.translate(flag.x + FLAG_SIZE/2, flag.y + FLAG_SIZE/2);
+                    ctx.scale(scale, scale);
+                    ctx.fillText('⭐', -FLAG_SIZE/2, FLAG_SIZE/2);
+                    ctx.restore();
+                } else {
+                    ctx.fillText('🚩', flag.x, flag.y + FLAG_SIZE);
+                }
+            });
+
+            // 적
+            enemies.forEach(enemy => {
+                ctx.save();
+                ctx.translate(enemy.x + CAR_SIZE/2, enemy.y + CAR_SIZE/2);
+                if (enemy.stunned) {
+                    ctx.rotate(enemy.angle);
+                    ctx.globalAlpha = 0.6;
+                }
+                ctx.font = `${CAR_SIZE}px Arial`;
+                ctx.fillText(enemy.stunned ? '💫' : '🚗', -CAR_SIZE/2, CAR_SIZE/3);
+                ctx.restore();
+            });
+
+            // 플레이어
+            ctx.save();
+            ctx.translate(player.x + CAR_SIZE/2, player.y + CAR_SIZE/2);
+
+            let rotation = 0;
+            let scaleX = 1;
+            if (player.direction === 'up') rotation = -Math.PI/2;
+            else if (player.direction === 'down') rotation = Math.PI/2;
+            else if (player.direction === 'left') scaleX = -1;
+
+            ctx.rotate(rotation);
+            ctx.scale(scaleX, 1);
+            ctx.font = `${CAR_SIZE}px Arial`;
+            ctx.filter = 'hue-rotate(180deg)';
+            ctx.fillText('🚗', -CAR_SIZE/2, CAR_SIZE/3);
+            ctx.filter = 'none';
+            ctx.restore();
+
+            // UI 업데이트
+            document.getElementById('score').textContent = score;
+            document.getElementById('level').textContent = level;
+            document.getElementById('flags').textContent = 10 - flags.length;
+
+            const fuelBar = document.getElementById('fuelBar');
+            fuelBar.style.width = fuel + '%';
+            fuelBar.className = 'fuel-fill' + (fuel < 30 ? ' low' : '');
+
+            // 미니맵
+            drawMinimap();
+        }
+
+        function drawMinimap() {
+            minimapCtx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+            minimapCtx.fillRect(0, 0, 160, 120);
+
+            // 깃발
+            flags.forEach(flag => {
+                minimapCtx.fillStyle = flag.isSpecial ? '#ffff00' : '#00ff00';
+                minimapCtx.beginPath();
+                minimapCtx.arc(
+                    (flag.x / GAME_WIDTH) * 160,
+                    (flag.y / GAME_HEIGHT) * 120,
+                    3, 0, Math.PI * 2
+                );
+                minimapCtx.fill();
+            });
+
+            // 적
+            enemies.forEach(enemy => {
+                minimapCtx.fillStyle = enemy.stunned ? '#888888' : '#ff0000';
+                minimapCtx.beginPath();
+                minimapCtx.arc(
+                    (enemy.x / GAME_WIDTH) * 160,
+                    (enemy.y / GAME_HEIGHT) * 120,
+                    4, 0, Math.PI * 2
+                );
+                minimapCtx.fill();
+            });
+
+            // 플레이어
+            minimapCtx.fillStyle = '#00aaff';
+            minimapCtx.beginPath();
+            minimapCtx.arc(
+                (player.x / GAME_WIDTH) * 160,
+                (player.y / GAME_HEIGHT) * 120,
+                5, 0, Math.PI * 2
+            );
+            minimapCtx.fill();
+        }
+
+        function gameLoop() {
+            if (gameState !== 'playing') return;
+
+            updateGame();
+            drawGame();
+
+            animationId = requestAnimationFrame(gameLoop);
+        }
+
+        function showGameOver() {
+            document.getElementById('finalScore').textContent = score;
+            document.getElementById('finalLevel').textContent = level;
+            document.getElementById('gameoverScreen').classList.remove('hidden');
+        }
+
+        function showWinScreen() {
+            document.getElementById('winScore').textContent = score;
+            document.getElementById('clearedLevel').textContent = level;
+            document.getElementById('winScreen').classList.remove('hidden');
+        }
+
+        function startGame() {
+            score = 0;
+            level = 1;
+            initGame();
+        }
+
+        function restartGame() {
+            score = 0;
+            level = 1;
+            initGame();
+        }
+
+        function nextLevel() {
+            level++;
+            initGame();
+        }
+
+        // 초기 화면 그리기
+        ctx.fillStyle = '#1a1a2e';
+        ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+        ctx.font = '48px Arial';
+        ctx.fillStyle = '#ffffff';
+        ctx.textAlign = 'center';
+        ctx.fillText('🚗 방구차 💨', GAME_WIDTH/2, GAME_HEIGHT/2);
+    </script>
+</body>
+</html>
